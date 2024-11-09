@@ -4,7 +4,7 @@ use std::io::{BufRead, BufReader};
 const DIGITS: [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
 pub fn first() {
-    let file = File::open("src/2023/first.txt").expect("Could not open file");
+    let file = File::open("src/input/first.txt").expect("Could not open file");
     let puzzle = BufReader::new(file).lines();
 
     let mut sum = 0;
