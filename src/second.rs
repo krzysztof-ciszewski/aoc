@@ -18,28 +18,38 @@ fn ksaruu_solution(puzzle: Lines<BufReader<File>>) {
         let mut captures = re.captures_iter(line.as_str());
         let game_capture = captures.next().unwrap().unwrap();
 
-        let game_nr = game_capture.name("gameNr").unwrap().as_str().parse::<u8>().unwrap();
+        let game_nr = game_capture
+            .name("gameNr")
+            .unwrap()
+            .as_str()
+            .parse::<u8>()
+            .unwrap();
 
         let mut possible = true;
         for capture in captures {
             let capture = capture.unwrap();
             let color_name = capture.name("colorName").unwrap().as_str();
-            let color_nr = capture.name("colorNr").unwrap().as_str().parse::<u8>().unwrap();
+            let color_nr = capture
+                .name("colorNr")
+                .unwrap()
+                .as_str()
+                .parse::<u8>()
+                .unwrap();
 
-            if (color_name == "red" && color_nr > 12) {
+            if color_name == "red" && color_nr > 12 {
                 possible = false;
             }
 
-            if (color_name == "green" && color_nr > 13) {
+            if color_name == "green" && color_nr > 13 {
                 possible = false;
             }
 
-            if (color_name == "blue" && color_nr > 14) {
+            if color_name == "blue" && color_nr > 14 {
                 possible = false;
             }
         }
 
-        if (possible) {
+        if possible {
             sum += game_nr as u32;
         }
     }
@@ -53,7 +63,7 @@ fn ksaruu_solution_part2(puzzle: Lines<BufReader<File>>) {
     for line in puzzle.flatten() {
         let re = Regex::new(r"(?:Game\s)(?P<gameNr>\d+):\s|(?P<colorNr>\d+)\s(?P<colorName>blue|red|green)(?:[; ,]*)+").unwrap();
 
-        let mut captures = re.captures_iter(line.as_str());
+        let captures = re.captures_iter(line.as_str());
 
         let mut max_red = 0;
         let mut max_blue = 0;
@@ -62,27 +72,31 @@ fn ksaruu_solution_part2(puzzle: Lines<BufReader<File>>) {
         for capture in captures {
             let capture = capture.unwrap();
             let color_name = capture.name("colorName").unwrap().as_str();
-            let color_nr = capture.name("colorNr").unwrap().as_str().parse::<u32>().unwrap();
+            let color_nr = capture
+                .name("colorNr")
+                .unwrap()
+                .as_str()
+                .parse::<u32>()
+                .unwrap();
 
             match color_name {
                 "red" => {
-                    if (color_nr > max_red) {
+                    if color_nr > max_red {
                         max_red = color_nr;
                     }
                 }
                 "green" => {
-                    if (color_nr > max_green) {
+                    if color_nr > max_green {
                         max_green = color_nr;
                     }
                 }
                 "blue" => {
-                    if (color_nr > max_blue) {
+                    if color_nr > max_blue {
                         max_blue = color_nr;
                     }
                 }
                 _ => {}
             }
-
         }
 
         sum += max_red * max_blue * max_green;
@@ -91,7 +105,6 @@ fn ksaruu_solution_part2(puzzle: Lines<BufReader<File>>) {
     println!("Sum: {}", sum);
 }
 
-
 fn my_solution(puzzle: Lines<BufReader<File>>) {
     let mut sum: u32 = 0;
 
@@ -99,18 +112,27 @@ fn my_solution(puzzle: Lines<BufReader<File>>) {
         let re = Regex::new(r"Game (\d+):").unwrap();
 
         let line_str = line.as_str();
-        let id = re.captures(line_str).unwrap().unwrap().get(1).unwrap().as_str().to_string().parse::<u8>().unwrap();
+        let id = re
+            .captures(line_str)
+            .unwrap()
+            .unwrap()
+            .get(1)
+            .unwrap()
+            .as_str()
+            .to_string()
+            .parse::<u8>()
+            .unwrap();
 
         let max_red = get_max_red(line_str);
-        if (max_red > 12) {
+        if max_red > 12 {
             continue;
         }
         let max_green = get_max_green(line_str);
-        if (max_green > 13) {
+        if max_green > 13 {
             continue;
         }
         let max_blue = get_max_blue(line_str);
-        if (max_blue > 14) {
+        if max_blue > 14 {
             continue;
         }
 
@@ -138,13 +160,18 @@ fn get_max_blue(line: &str) -> u8 {
     get_max(line, re)
 }
 
-
 fn get_max(line: &str, re: Regex) -> u8 {
-    let mut captures = re.captures_iter(line);
+    let captures = re.captures_iter(line);
 
     let mut max = 0;
     for capture in captures {
-        let val = capture.unwrap().get(1).unwrap().as_str().parse::<u8>().unwrap();
+        let val = capture
+            .unwrap()
+            .get(1)
+            .unwrap()
+            .as_str()
+            .parse::<u8>()
+            .unwrap();
         if val > max {
             max = val;
         }

@@ -1,7 +1,9 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-const DIGITS: [&str; 9] = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+const DIGITS: [&str; 9] = [
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+];
 
 pub fn first() {
     let file = File::open("src/input/first.txt").expect("Could not open file");
@@ -16,7 +18,7 @@ pub fn first() {
     println!("Sum: {}", sum);
 }
 
-fn find_text_num(mut line: Vec<char>) -> i32 {
+fn find_text_num(line: Vec<char>) -> i32 {
     let mut number = Vec::new();
     let mut left: usize = 0;
     let mut right: usize = line.len() - 1;
@@ -26,7 +28,7 @@ fn find_text_num(mut line: Vec<char>) -> i32 {
             break;
         }
 
-        if (line[left].is_numeric()) {
+        if line[left].is_numeric() {
             number.push(line[left]);
             break;
         }
@@ -99,7 +101,6 @@ fn find_text_num(mut line: Vec<char>) -> i32 {
             }
         }
 
-
         right -= 1;
     }
 
@@ -149,8 +150,7 @@ fn digit_ends_with(char: char) -> Vec<String> {
     ends_with
 }
 
-
-fn find_num(mut line: Vec<char>) -> i32 {
+fn find_num(line: Vec<char>) -> i32 {
     let mut number = Vec::new();
     let mut left: usize = 0;
     let mut right: usize = line.len() - 1;
