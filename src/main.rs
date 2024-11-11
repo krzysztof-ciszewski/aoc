@@ -1,7 +1,8 @@
 mod first;
 mod second;
 mod third;
+mod fourth;
 
 fn main() {
-    third::third();
+    fourth::fourth();
 }
